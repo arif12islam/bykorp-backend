@@ -385,3 +385,22 @@ async function startServer() {
 
 // Start the server
 startServer();
+
+// Admin authentication endpoint
+app.post('/api/admin/login', (req, res) => {
+  const { username, password } = req.body;
+  
+  // Simple authentication (replace with proper JWT in production)
+  if (username === 'admin' && password === 'bykorp2025') {
+    res.json({ 
+      token: 'admin-authenticated-' + Date.now(),
+      message: 'Login successful',
+      user: {
+        username: 'admin',
+        role: 'administrator'
+      }
+    });
+  } else {
+    res.status(401).json({ error: 'Invalid credentials' });
+  }
+});
