@@ -172,7 +172,7 @@ async function insertSampleData() {
 app.use(cors());
 app.use(express.json());
 // Initialize database
-initializeDatabase().catch(console.error);
+// Database initialization moved to startServer function
 // Routes
 // Get all services
 app.get('/api/services', async (req, res) => {
@@ -348,7 +348,21 @@ process.on('SIGINT', async () => {
     }
     process.exit(0);
 });
-app.listen(PORT, () => {
-    console.log(`🚀 Bykorp API Server with MongoDB running on http://localhost:${PORT}`);
-});
+// Start server function that waits for database initialization
+async function startServer() {
+    try {
+        // Initialize database first
+        await initializeDatabase();
+        // Then start the server
+        app.listen(PORT, () => {
+            console.log(`🚀 Bykorp API Server with MongoDB running on http://localhost:${PORT}`);
+        });
+    }
+    catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+    }
+}
+// Start the server
+startServer();
 //# sourceMappingURL=index.js.map
