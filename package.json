@@ -5,7 +5,7 @@
   "main": "src/server/index.ts",
   "type": "module",
   "scripts": {
-    "start": "node dist/server/index.js",
+    "start": "node dist/src/server/index.js",
     "build": "tsc",
     "dev": "tsx src/server/index.ts",
     "postinstall": "npm run build"
